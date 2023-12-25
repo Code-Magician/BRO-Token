@@ -23,4 +23,30 @@ actor Bro {
     public query func getSymbol(): async Text {
         return symbol;
     };
+
+    
+    public shared(msg) func freeTokens(): async Text {
+        Debug.print(debug_show(msg.caller));
+        if(balanceOf.get(msg.caller) == null) {
+            return await transfer(msg.caller, 10000);
+        }
+        else {
+            return "Already Claimed";
+        }
+    };
+
+    public shared(msg) func transfer(to: Principal, amount: Nat): async Text {
+        let senderBalance = await getBalance(msg.caller);
+        if(senderBalance > amount) {
+            let recieverBalance = await getBalance(to);
+
+            balanceOf.put(msg.caller, senderBalance - amount);
+            balanceOf.put(to, recieverBalance + amount);
+            
+            return "Success";
+        }
+        else {
+            return "Insufficient Balance";
+        }
+    };
 } 

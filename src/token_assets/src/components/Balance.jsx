@@ -42,7 +42,7 @@ function Balance() {
           Check Balance
         </button>
       </p>
-      <p>This account has a balance of {balance}{symbol}.</p>
+      <p>This account has a balance of {balance} {symbol}.</p>
     </div>
   );
 }
