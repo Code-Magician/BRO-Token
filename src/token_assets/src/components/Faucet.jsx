@@ -1,13 +1,25 @@
-import React, { useState } from "react";
-import { token } from "../../../declarations/token/index";
+import React, { useEffect, useState } from "react";
 
-function Faucet() {
+function Faucet(props) {
   const [isBtnDisabled, setBtnDisabled] = useState(false);
   const [btnTxt, setBtnTxt] = useState("Gimme Gimme");
+  const [identity, setIdentity] = useState("");
+
+  useEffect(() => {
+    async function fetchIdentity() {
+      const userIdentity = await (await props.authenticatedUser()).getIdentity();
+      setIdentity(toString(userIdentity._principal.toString()));
+    };
+
+    fetchIdentity();
+  }, []);
 
   async function handleClick(event) {
     setBtnDisabled(true);
-    const txt = await token.freeTokens();
+
+    const authenticatedCanister = await props.authenticatedCanister();
+
+    const txt = await authenticatedCanister.freeTokens();
     setBtnTxt(txt);
   }
 
@@ -19,7 +31,10 @@ function Faucet() {
         </span>
         Faucet
       </h2>
-      <label>Get your free DAngela tokens here! Claim 10,000 DANG coins to your account.</label>
+      <label>Get your free DAngela tokens here! Claim 10,000 DANG coins to your account.
+        <br />
+        {identity}
+      </label>
       <p className="trade-buttons">
         <button
           id="btn-payout"

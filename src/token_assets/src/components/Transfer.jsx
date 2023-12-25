@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Principal } from '@dfinity/principal';
 import { token } from "../../../declarations/token/index";
 
-function Transfer() {
+function Transfer(props) {
   const [pId, setPId] = useState("");
   const [amount, setAmount] = useState(0);
   const [isBtnDisabled, setBtnDisabled] = useState(false);
@@ -11,7 +11,9 @@ function Transfer() {
   async function handleClick() {
     setBtnDisabled(true);
 
-    const txt = await token.transfer(Principal.fromText(pId), parseInt(amount));
+    const authenticatedCanister = await props.authenticatedCanister();
+
+    const txt = await authenticatedCanister.transfer(Principal.fromText(pId), parseInt(amount));
     setBtnTxt(txt);
     
     setAmount(0);
