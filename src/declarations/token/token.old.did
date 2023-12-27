@@ -1,6 +1,0 @@
-service : {
-  freeTokens: () -> (text);
-  getBalance: (principal) -> (nat) query;
-  getSymbol: () -> (text) query;
-  transfer: (principal, nat) -> (text);
-}

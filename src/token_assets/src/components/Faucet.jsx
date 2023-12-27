@@ -31,7 +31,7 @@ function Faucet(props) {
         </span>
         Faucet
       </h2>
-      <label>Get your free DAngela tokens here! Claim 10,000 DANG coins to your account.
+      <label>Get your free Bro tokens here! Claim 10,000 BRO coins to your account.
         <br />
         {identity}
       </label>
